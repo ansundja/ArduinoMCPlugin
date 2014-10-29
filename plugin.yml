@@ -1,0 +1,29 @@
+name: ArduinoMCPlugin
+main: de.sfn_kassel.minecraft.arduino.bukkit.ArduinoMCPlugin
+version: 0.0.2
+
+
+commands:
+   arduino:
+      description: A command to set settings for the arduino-plugin.
+      usage: /<command> [...]
+      permission: ArduinoMCPlugin.arduino
+      permission-message: You don't have permission <permission>
+   arduino-info:
+      description: Get info about the arduino-plugin.
+      usage: /<command>
+      permission: ArduinoMCPlugin.arduino-info
+      permission-message: You don't have permission <permission>
+
+permissions:
+   ArduinoMCPlugin.*:
+      description: control Arduino
+      default: true
+      children:
+         ArduinoMCPlugin.basic: true
+   ArduinoMCPlugin.arduino:
+      description: settings
+      default: true
+   ArduinoMCPlugin.arduino-info:
+      description: info
+      default: true
