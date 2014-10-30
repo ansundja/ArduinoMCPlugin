@@ -73,7 +73,6 @@ public class ArduController implements Closeable {
 	}
 
 	/**
-	 * 
 	 * <b>Communication PC --> Arduino</b><br>
 	 * <p>
 	 * Generates and sends a command to the Arduino via COM-port.
@@ -81,14 +80,12 @@ public class ArduController implements Closeable {
 	 * 
 	 * @param cmd One of the followings: {@code DIGITAL_IN, ANALOG_IN}
 	 * @param pin Number of the pin (analog output A1 = ??TODO??)
-	 * 
 	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin) {
 		sendToArduino(cmd, pin, 0);
 	}
 
 	/**
-	 * 
 	 * <b>Communication PC --> Arduino</b><br>
 	 * <p>
 	 * Generates and sends a command to the Arduino via COM-port.
@@ -97,7 +94,6 @@ public class ArduController implements Closeable {
 	 * @param cmd One of the followings: {@code ANALOG_OUT, DIGITAL_IN, ANALOG_IN}
 	 * @param pin Number of the pin (analog output A1 = ??TODO??)
 	 * @param value The value to be set. For analog output it should be 0-15.
-	 * 
 	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin, int value) {
 		switch (cmd) {
@@ -128,7 +124,6 @@ public class ArduController implements Closeable {
 	 * +-----+-----+-----+
 	 */
 	/**
-	 * 
 	 * <b>Communication PC --> Arduino</b><br>
 	 * <p>
 	 * Sends a command to the Arduino via COM-port.
@@ -143,7 +138,6 @@ public class ArduController implements Closeable {
 	 * @param cmd see above; contains <b>PIN</b> and <b>Val</b>
 	 * @param PIN given as a capital letter (@ -> 0, A -> 1, B -> 2, ...)
 	 * @param Val given as a capital letter (@ -> 0, A -> 1, B -> 2, ...); might not be used by input commands
-	 * 
 	 */
 	public void sendToArduino(String cmd) {
 		if (!cmd.endsWith("\n"))
