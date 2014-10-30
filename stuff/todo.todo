@@ -16,6 +16,7 @@ todo:
 	x Soll der Output nur mit Wires funktionieren, oder auch mit anderen Blöcken? (falls auch mit anderen, muss man glaube nur die Überprüfung rausnehmen, obs ein Kabel ist, da beim Event ja gleich eine neue Current übergeben wird und das Plugin so nichtmal wissen muss, was das für ein Block ist...) Jaro´s meinung: Jo machen wir
 	x debug mode
 	x Changelog entweder ordentlich führen oder abschaffen... Jaro´s meinung: ABSCHAFFEN UND GIT BEUTZEN!!!
+	- Git hin oder her: wenn wir jetzt zu zweit am selben dokument arbeiten ändert das nichts daran, dass Dropbox in Konflikt stehende Kopien produziert und die letztendlich auch nicht zusammengebastelt werden oder sehe ich da was falsch?
 	
 	- verwendugszweck überlgen
 	- beispiel aufbau
