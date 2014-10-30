@@ -72,16 +72,32 @@ public class ArduController implements Closeable {
 		levers[pin].update();
 	}
 
+	/**
+	 * 
+	 * <b>Communication PC --> Arduino</b><br>
+	 * <p>
+	 * Generates and sends a command to the Arduino via COM-port.
+	 * </p>
+	 * 
+	 * @param cmd One of the followings: {@code DIGITAL_IN, ANALOG_IN}
+	 * @param pin Number of the pin (analog output A1 = ??TODO??)
+	 * 
+	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin) {
 		sendToArduino(cmd, pin, 0);
 	}
 
 	/**
-	 * TODO ...
 	 * 
-	 * @param cmd
-	 * @param pin
-	 * @param value
+	 * <b>Communication PC --> Arduino</b><br>
+	 * <p>
+	 * Generates and sends a command to the Arduino via COM-port.
+	 * </p>
+	 * 
+	 * @param cmd One of the followings: {@code ANALOG_OUT, DIGITAL_IN, ANALOG_IN}
+	 * @param pin Number of the pin (analog output A1 = ??TODO??)
+	 * @param value The value to be set. For analog output it should be 0-15.
+	 * 
 	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin, int value) {
 		switch (cmd) {
@@ -99,6 +115,36 @@ public class ArduController implements Closeable {
 		}
 	}
 	
+	/*
+	 * Communication PC --> Arduino
+	 * 
+	 *   ch1   ch2   ch3
+	 * +-----+-----+-----+
+	 * |  d  | PIN |  X  |            digital input
+	 * +-----+-----+-----+
+	 * |  a  | PIN |  X  |            analog input
+	 * +-----+-----+-----+
+	 * |  o  | PIN | Val |            analog output
+	 * +-----+-----+-----+
+	 */
+	/**
+	 * 
+	 * <b>Communication PC --> Arduino</b><br>
+	 * <p>
+	 * Sends a command to the Arduino via COM-port.
+	 * </p>
+	 * <table border="1">
+	 * <tr><td>ch1</td><td>ch2</td><td>ch3</td></tr>
+	 * <tr><td>d</td><td><b>PIN</b></td><td><b>Val</b></td><td></td><td>digital input</td></tr>
+	 * <tr><td>a</td><td><b>PIN</b></td><td><b>Val</b></td><td></td><td>analog input</td></tr>
+	 * <tr><td>o</td><td><b>PIN</b></td><td><b>Val</b></td><td></td><td>analog output</td></tr>
+	 * </table>
+	 * 
+	 * @param cmd see above; contains <b>PIN</b> and <b>Val</b>
+	 * @param PIN given as a capital letter (@ -> 0, A -> 1, B -> 2, ...)
+	 * @param Val given as a capital letter (@ -> 0, A -> 1, B -> 2, ...); might not be used by input commands
+	 * 
+	 */
 	public void sendToArduino(String cmd) {
 		if (!cmd.endsWith("\n"))
 			cmd += '\n';
