@@ -9,12 +9,13 @@ todo:
 	x analoger output
 	//wir haben eine andere mölichkeit gefunden - hashmap umdrehen
 	- Wie herum die Hashmap für die Schilder?
+	- Arduino Reset comand
 	- (analoger input)(über <>= operatoren)
 	- (Schalter sperren wenn er vom ardu genutzt wird)
 	- Soll das nur funktionieren, wenn das Schild NACH dem Schalter/Redstonekabel platziert wird? (falls nein, überlegen und implementieren...; aufwändig.. mäh ... nach Know IT?) Jaro´s meinung : statt einem on sign changed listener einen on block listenr benutzen!! ;)
 	x Soll der Output nur mit Wires funktionieren, oder auch mit anderen Blöcken? (falls auch mit anderen, muss man glaube nur die Überprüfung rausnehmen, obs ein Kabel ist, da beim Event ja gleich eine neue Current übergeben wird und das Plugin so nichtmal wissen muss, was das für ein Block ist...) Jaro´s meinung: Jo machen wir
 	x debug mode
-	- Changelog entweder ordentlich führen oder abschaffen... Jaro´s meinung: ABSCHAFFEN UND GIT BEUTZEN!!!
+	x Changelog entweder ordentlich führen oder abschaffen... Jaro´s meinung: ABSCHAFFEN UND GIT BEUTZEN!!!
 	
 	- verwendugszweck überlgen
 	- beispiel aufbau
