@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.sfn_kassel.minecraft.arduino.arduino.ArduController;
+import de.sfn_kassel.minecraft.arduino.arduino.ArduController.ArduinoCommand;
 import de.sfn_kassel.minecraft.arduino.arduino.ArduListener;
 import de.sfn_kassel.minecraft.arduino.com.Com;
 import de.sfn_kassel.minecraft.arduino.com.LibaryLoader;
@@ -85,9 +86,11 @@ public class ArduinoMCPlugin extends JavaPlugin {
 						sender.sendMessage("usage: arduino set [PIN] [LEVEL]\n\tPIN: the pin number\n\tLEVEL: the level (0-15)");
 						return false;
 					}
-					String msg = "o"+((char) ('@'+Byte.parseByte(args[1])))+((char) ('@'+Byte.parseByte(args[2])));
-					sender.sendMessage("sending "+msg);
-					controller.sendToArduino(msg);
+//					String msg = "o"+((char) ('@'+Byte.parseByte(args[1])))+((char) ('@'+Byte.parseByte(args[2])));
+//					sender.sendMessage("sending "+msg);
+					byte pin = Byte.parseByte(args[1]), value =  Byte.parseByte(args[2]);
+					sender.sendMessage("setting analog output pin "+pin+" at value "+value);
+					controller.sendToArduino(ArduinoCommand.ANALOG_OUT, pin, value);
 					break;
 					
 				case "comset": //this is fucking useless ;)
