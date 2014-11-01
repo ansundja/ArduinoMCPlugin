@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.material.Lever;
 
 import de.sfn_kassel.minecraft.arduino.bukkit.ArduinoMCPlugin;
@@ -17,7 +18,7 @@ import de.sfn_kassel.minecraft.arduino.com.Com;
 public class ArduController implements Closeable {
 
 	private ArduinoMCPlugin plugin;
-//	private HashMap<Location, Location> knownSigns = new HashMap<>();
+	private HashMap<Location, Location> knownBlocksAndSigns = new HashMap<>();
 	private ArduListener arduListener = null;
 	private Com com;
 	public enum ArduinoCommand{ANALOG_OUT, DIGITAL_IN, ANALOG_IN};
@@ -197,6 +198,23 @@ public class ArduController implements Closeable {
 
 	public ArduinoMCPlugin getPlugin() {
 		return plugin;
+	}
+	
+	public boolean isKnownLocation(Location loc) {
+		return knownBlocksAndSigns.containsKey(loc);
+	}
+	
+	public BlockState getSignByBlock(Location redstoneBlock) {
+		return knownBlocksAndSigns.get(redstoneBlock).getBlock().getState();
+	}
+	
+	public boolean isKnownSign(Location loc) {
+		return knownBlocksAndSigns.containsValue(loc);
+	}
+
+	public void addSign(SignChangeEvent signChangeEvent, Location block) {
+		knownBlocksAndSigns.put(signChangeEvent.getBlock().getLocation(), block);
+		//TODO store signChangeEvent.getLine(1) somewhere 
 	}
 	
 }

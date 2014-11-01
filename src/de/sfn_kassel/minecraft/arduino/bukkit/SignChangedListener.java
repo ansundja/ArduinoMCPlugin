@@ -90,17 +90,15 @@ public class SignChangedListener implements Listener {
 				return;
 			int signPin = Byte.parseByte(sign.getLine(1));
 			info("!= Material.LEVER: "+(block.getType() != Material.LEVER));
+			plugin.getController().addSign(sign, block.getLocation());
 			if (block.getType() == Material.LEVER) {
 				plugin.getController().addLever(block.getState(), signPin);
 				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
 //				plugin.getController().sendToArduino("d"+((char) ('@'+signPin))+"X\n");
-			} else if (block.getType() == Material.REDSTONE_WIRE) {
-				plugin.getController().getOutWires().put(block, signPin);
-			} else if (block.getType() == Material.REDSTONE_BLOCK) {
-				plugin.getController().getOutWires().put(block, signPin);
-			} else if (block.getType() == Material.REDSTONE) {
-				plugin.getController().getOutWires().put(block, signPin);
-			} else if (block.getType() == Material.REDSTONE_ORE) {
+			} else if (block.getType() == Material.REDSTONE_WIRE
+					|| block.getType() == Material.REDSTONE_BLOCK
+					|| block.getType() == Material.REDSTONE
+					|| block.getType() == Material.REDSTONE_ORE) {
 				plugin.getController().getOutWires().put(block, signPin);
 			} 
 			
