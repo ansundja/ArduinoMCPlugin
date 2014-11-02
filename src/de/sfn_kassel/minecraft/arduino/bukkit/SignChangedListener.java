@@ -94,6 +94,9 @@ public class SignChangedListener implements Listener {
 			if (block.getType() == Material.LEVER) {
 				plugin.getController().addLever(block.getState(), signPin);
 				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
+				String statement = sign.getLine(2);
+				if(statement != "")
+					info("jay you typed a statement :D");
 //				plugin.getController().sendToArduino("d"+((char) ('@'+signPin))+"X\n");
 			} else if (block.getType() == Material.REDSTONE_WIRE
 					|| block.getType() == Material.REDSTONE_BLOCK

@@ -214,7 +214,7 @@ public class ArduController implements Closeable {
 
 	public void addSign(SignChangeEvent signChangeEvent, Location block) {
 		knownBlocksAndSigns.put(signChangeEvent.getBlock().getLocation(), block);
-		//TODO store signChangeEvent.getLine(1) somewhere 
+		//TODO store signChangeEvent.getLine(2) somewhere 
 	}
 	
 }
