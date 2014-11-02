@@ -2,6 +2,10 @@ package de.sfn_kassel.minecraft.arduino.bukkit.util;
 
 public class Conditions {
 	
+	//deny Access
+	private Conditions() {
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("abcdefg".substring(0, 1));
 	}
