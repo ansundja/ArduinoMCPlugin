@@ -12,6 +12,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.material.Lever;
 
 import de.sfn_kassel.minecraft.arduino.bukkit.ArduinoMCPlugin;
+import de.sfn_kassel.minecraft.arduino.bukkit.util.Condition;
 import de.sfn_kassel.minecraft.arduino.bukkit.util.ConfigLoader;
 import de.sfn_kassel.minecraft.arduino.com.Com;
 
@@ -151,6 +152,15 @@ public class ArduController implements Closeable {
 	}
 	
 	public void addLever(BlockState lever, int pin) {
+		addLever(lever, pin, null);
+	}
+	
+	/**
+	 * @param lever
+	 * @param pin
+	 * @param condition (may be null)
+	 */
+	public void addLever(BlockState lever, int pin, Condition condition) {//TODO implement condition
 		if (pin >= levers.length)
 			throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
 		levers[pin] = lever;
@@ -159,7 +169,7 @@ public class ArduController implements Closeable {
 	@Deprecated
 	public void checkSign(Location sign) {
 		if (sign.getBlock().getType() == Material.WALL_SIGN)
-			if (((org.bukkit.block.Sign) sign.getBlock().getState().getData()).getLine(0).trim().equalsIgnoreCase("arduino"))//TODO check
+			if (((org.bukkit.block.Sign) sign.getBlock().getState().getData()).getLine(0).trim().equalsIgnoreCase("arduino"))
 				return;
 //		knownSigns.remove(sign);
 	}
