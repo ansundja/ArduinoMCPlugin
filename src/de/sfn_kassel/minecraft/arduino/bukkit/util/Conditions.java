@@ -6,10 +6,6 @@ public class Conditions {
 	private Conditions() {
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("abcdefg".substring(0, 1));
-	}
-	
 	public static Condition parseCondition(String condition) {
 		condition = condition.trim();
 		
