@@ -10,31 +10,70 @@ public class Conditions {
 		condition = condition.trim();
 		
 		try {
-			String comparator = condition.substring(0, 1);
+			String comparator = ("!=<>".indexOf(condition.charAt(0)) == -1) ? ">=" : condition.substring(0, 1);//default '>' or first char
 			char c = condition.charAt(1);
 			if (c == '=' || c == '>')
 				comparator += c;
 			final int compareValue = Integer.parseInt(condition.substring(comparator.length(), condition.length()).trim());
 			
-			if (comparator.equals("<=")) {
+			// as Lambda
+			if (comparator.equals("<="))
 				return v -> v <= compareValue;
-//				return new Condition() {// (as non-Lambda:)
-//					@Override
-//					public boolean matches(int value) {
-//						return value <= compareValue;
-//					}
-//				};
-			} else if (comparator.equals(">=")) {
+			else if (comparator.equals(">="))
 				return v -> v >= compareValue;
-			} else if (comparator.equals("!=") || comparator.equals("<>")) {
+			else if (comparator.equals("!=") || comparator.equals("<>"))
 				return v -> v != compareValue;
-			} else if (comparator.equals("=") || comparator.equals("==")) {
+			else if (comparator.equals("=") || comparator.equals("=="))
 				return v -> v == compareValue;
-			} else if (comparator.equals("<")) {
+			else if (comparator.equals("<"))
 				return v -> v < compareValue;
-			} else if (condition.startsWith(">")) {
+			else if (comparator.equals(">"))
 				return v -> v > compareValue;
-			}
+			
+			//not as Lambda
+			/*if (comparator.equals("<=")) {
+				return new Condition() {// (as non-Lambda:)
+					@Override
+					public boolean matches(int value) {
+						return value <= compareValue;
+					}
+				};
+			} else if (comparator.equals(">=")) {
+				return new Condition() {
+					@Override
+					public boolean matches(int value) {
+						return value >= compareValue;
+					}
+				};
+			} else if (comparator.equals("!=") || comparator.equals("<>")) {
+				return new Condition() {
+					@Override
+					public boolean matches(int value) {
+						return value != compareValue;
+					}
+				};
+			} else if (comparator.equals("=") || comparator.equals("==")) {
+				return new Condition() {
+					@Override
+					public boolean matches(int value) {
+						return value == compareValue;
+					}
+				};
+			} else if (comparator.equals("<")) {
+				return new Condition() {
+					@Override
+					public boolean matches(int value) {
+						return value < compareValue;
+					}
+				};
+			} else if (comparator.equals(">")) {
+				return new Condition() {
+					@Override
+					public boolean matches(int value) {
+						return value > compareValue;
+					}
+				};
+			}*/
 		} catch (Exception e) {
 			//condition not in right syntax
 		}
