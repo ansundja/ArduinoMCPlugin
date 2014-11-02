@@ -1,4 +1,4 @@
-arduMC
+ArduinoMCPlugin
 ======
 
-arduMC is a minecraft Craftbukkit server Plugin That allows you to control an Arduino via Minecraft
+ArduinoMCPlugin is a minecraft Craftbukkit server Plugin that allows you to control easily an Arduino via Minecraft
