@@ -10,16 +10,18 @@ public class Conditions {
 		condition = condition.trim();
 		
 		try {
-			String comparator = ("!=<>".indexOf(condition.charAt(0)) == -1) ? ">=" : condition.substring(0, 1);//default '>' or first char
-			char c = condition.charAt(1);
-			if (c == '=' || c == '>')
-				comparator += c;
+			String comparator = ("!=<>".indexOf(condition.charAt(0)) == -1) ? "" : condition.substring(0, 1);// ">=" (default) or first char
+			if (!comparator.isEmpty() && condition.length() > 1) {
+				char c = condition.charAt(1);
+				if (c == '=' || c == '>')// is two-char-comparator? --> add 2nd char
+					comparator += c;
+			}
 			final int compareValue = Integer.parseInt(condition.substring(comparator.length(), condition.length()).trim());
 			
 			// as Lambda
 			if (comparator.equals("<="))
 				return v -> v <= compareValue;
-			else if (comparator.equals(">="))
+			else if (comparator.equals(">=") || comparator.isEmpty())
 				return v -> v >= compareValue;
 			else if (comparator.equals("!=") || comparator.equals("<>"))
 				return v -> v != compareValue;
