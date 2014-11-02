@@ -5,6 +5,7 @@ already done:
 
 todo:
 	x zwichenspeichern/ initialisieren des ardu
+	- NUR die Locations von den Schildern speichern -> alles andere beim Laden durch lesen der Schilder füllen!
 	- restart != sterben
 	x analoger output
 	//wir haben eine andere mölichkeit gefunden - hashmap umdrehen
