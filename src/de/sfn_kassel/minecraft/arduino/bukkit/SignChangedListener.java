@@ -13,6 +13,7 @@ import org.bukkit.util.Vector;
 
 import de.sfn_kassel.minecraft.arduino.arduino.ArduController.ArduinoCommand;
 import de.sfn_kassel.minecraft.arduino.bukkit.util.Condition;
+import de.sfn_kassel.minecraft.arduino.bukkit.util.Conditions;
 
 public class SignChangedListener implements Listener {
 	final ArduinoMCPlugin plugin;
@@ -95,7 +96,7 @@ public class SignChangedListener implements Listener {
 					info("jay you typed a statement :D");
 				Condition condition = null;
 				if (!statement.isEmpty())
-					condition = Condition.parseCondition(statement);
+					condition = Conditions.parseCondition(statement);
 				
 				plugin.getController().addLever(block.getState(), signPin, condition);
 				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
