@@ -12,6 +12,7 @@ import org.bukkit.material.Sign;
 import org.bukkit.util.Vector;
 
 import de.sfn_kassel.minecraft.arduino.arduino.ArduController.ArduinoCommand;
+import de.sfn_kassel.minecraft.arduino.bukkit.util.Condition;
 
 public class SignChangedListener implements Listener {
 	final ArduinoMCPlugin plugin;
@@ -77,9 +78,6 @@ public class SignChangedListener implements Listener {
 		//		}
 
 		if (event.getLine(0).trim().equalsIgnoreCase("arduino")) {
-//			plugin.getController().addSign(event.getBlock());
-			//			new RedstoneChangedListener(plugin);
-			//			event.getBlock().isBlockPowered()
 			SignChangeEvent sign = event;
 			MaterialData data = sign.getBlock().getState().getData();
 			info("!(data instanceof Sign): "+!(data instanceof Sign));
@@ -92,12 +90,16 @@ public class SignChangedListener implements Listener {
 			info("!= Material.LEVER: "+(block.getType() != Material.LEVER));
 			plugin.getController().addSign(sign, block.getLocation());
 			if (block.getType() == Material.LEVER) {
-				plugin.getController().addLever(block.getState(), signPin);
-				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
 				String statement = sign.getLine(2);
-				if(statement != "")
+				if(!statement.isEmpty())// @jaro: ' statement != "" ' never ever do that! 
 					info("jay you typed a statement :D");
-//				plugin.getController().sendToArduino("d"+((char) ('@'+signPin))+"X\n");
+				Condition condition = null;
+				if (!statement.isEmpty())
+					condition = Condition.parseCondition(statement);
+				
+				plugin.getController().addLever(block.getState(), signPin, condition);
+				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
+				
 			} else if (block.getType() == Material.REDSTONE_WIRE
 					|| block.getType() == Material.REDSTONE_BLOCK
 					|| block.getType() == Material.REDSTONE
