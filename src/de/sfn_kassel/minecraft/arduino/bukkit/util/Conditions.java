@@ -19,7 +19,7 @@ public class Conditions {
 			final int compareValue = Integer.parseInt(condition.substring(comparator.length(), condition.length()).trim());
 			
 			// as Lambda
-			if (comparator.equals("<="))
+			/*if (comparator.equals("<="))
 				return v -> v <= compareValue;
 			else if (comparator.equals(">=") || comparator.isEmpty())
 				return v -> v >= compareValue;
@@ -30,10 +30,10 @@ public class Conditions {
 			else if (comparator.equals("<"))
 				return v -> v < compareValue;
 			else if (comparator.equals(">"))
-				return v -> v > compareValue;
+				return v -> v > compareValue;*/
 			
 			//not as Lambda
-			/*if (comparator.equals("<=")) {
+			if (comparator.equals("<=")) {
 				return new Condition() {// (as non-Lambda:)
 					@Override
 					public boolean matches(int value) {
@@ -75,7 +75,7 @@ public class Conditions {
 						return value > compareValue;
 					}
 				};
-			}*/
+			}
 		} catch (Exception e) {
 			//condition not in right syntax
 		}

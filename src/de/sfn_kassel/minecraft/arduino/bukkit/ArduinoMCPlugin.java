@@ -1,7 +1,6 @@
 package de.sfn_kassel.minecraft.arduino.bukkit;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,7 +14,7 @@ import de.sfn_kassel.minecraft.arduino.com.LibaryLoader;
 
 public class ArduinoMCPlugin extends JavaPlugin {
 	private ArduController controller;
-	private boolean debug = false;
+	private boolean debug = true;
 
 	public ArduinoMCPlugin() {
 		super();
@@ -134,7 +133,7 @@ public class ArduinoMCPlugin extends JavaPlugin {
 				return true;
 			} else if(cmd.getName().equalsIgnoreCase("arduino-info")) {
 				sender.sendMessage("Levers:");
-				sender.sendMessage(Arrays.toString(controller.getLevers()));
+				sender.sendMessage(controller.getLevers().toString());
 				sender.sendMessage("Wires:");
 				sender.sendMessage(controller.getOutWires().toString());
 				return true;

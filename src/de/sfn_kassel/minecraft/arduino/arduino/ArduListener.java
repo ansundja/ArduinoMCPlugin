@@ -87,9 +87,9 @@ public class ArduListener implements Runnable, Closeable {
 		case 'A':
 			if (cmd.length() < 3)
 				break;
-			arduController.setMCAnalog(pin, value); 
 			if(arduController.getPlugin().isInDebugMode())
 				arduController.info("setMCAnalog("+pin+", "+value+")");
+			arduController.setMCAnalog(pin, value); 
 			break;
 		case 'd'://digital in
 		case 'D':

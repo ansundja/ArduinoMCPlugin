@@ -1,5 +1,6 @@
 package de.sfn_kassel.minecraft.arduino.bukkit.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ import de.sfn_kassel.minecraft.arduino.bukkit.ArduinoMCPlugin;
 public class ConfigLoader {
 	
 	private ArduinoMCPlugin plugin;
-	private BlockState[] levers;
+	private ArrayList<HashMap<BlockState,Condition>> levers;
 	private HashMap<Block, Integer> outWires;
 
 	public ConfigLoader(ArduinoMCPlugin plugin, ArduController controller) {
@@ -24,12 +25,14 @@ public class ConfigLoader {
 		this.outWires = controller.getOutWires();
 	}
 
-	public void load() {
+	public void load() {//TODO load sign-list
 		FileConfiguration config = plugin.getConfig();
-		for (int i = 0; i < levers.length; i++) {
-			Location loc = loadLocation("controller.levers."+i);
-			if (loc != null)
-				levers[i] = loc.getBlock().getState();
+		for (int i = 0; i < levers.size(); i++) {
+			Location loc;
+			int k = 0;
+			while ((loc = loadLocation("controller.levers."+i+"."+k++)) != null) {
+//					levers.get(i).put(key, value) = loc.getBlock().getState();
+			}
 //			plugin.getLogger().info("controller.levers."+i+" = "+plugin.getConfig().getString("controller.levers."+i)+" = "+loc+";  "+levers[i]);
 		}
 
@@ -69,15 +72,15 @@ public class ConfigLoader {
 		return loc.getWorld().getName()+"|"+loc.getBlockX()+"|"+loc.getBlockY()+"|"+loc.getBlockZ();
 	}
 	
-	public void save() {
+	public void save() {//TODO save as sign-list
 		FileConfiguration config = plugin.getConfig();
 		try {
 			config.set("controller.COM", plugin.getController().getCom().getComName());
 			config.set("controller.levers", null);
-			for (int i = 0; i < levers.length; i++) {
-				if (levers[i] != null)
-					config.set("controller.levers."+i, locationToString(levers[i].getLocation()));
-			}
+//			for (int i = 0; i < levers.length; i++) {
+//				if (levers[i] != null)
+//					config.set("controller.levers."+i, locationToString(levers[i].getLocation()));
+//			}
 			
 			config.set("controller.outWires", null);//clear?!
 			for (Block b : outWires.keySet()) {

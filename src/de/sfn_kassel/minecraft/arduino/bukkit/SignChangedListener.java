@@ -99,7 +99,7 @@ public class SignChangedListener implements Listener {
 					condition = Conditions.parseCondition(statement);
 				
 				plugin.getController().addLever(block.getState(), signPin, condition);
-				plugin.getController().sendToArduino(ArduinoCommand.DIGITAL_IN, signPin);
+				plugin.getController().sendToArduino((condition == null) ? ArduinoCommand.DIGITAL_IN : ArduinoCommand.ANALOG_IN, signPin);
 				
 			} else if (block.getType() == Material.REDSTONE_WIRE
 					|| block.getType() == Material.REDSTONE_BLOCK

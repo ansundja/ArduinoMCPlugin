@@ -2,6 +2,7 @@ package de.sfn_kassel.minecraft.arduino.arduino;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Location;
@@ -23,13 +24,16 @@ public class ArduController implements Closeable {
 	private ArduListener arduListener = null;
 	private Com com;
 	public enum ArduinoCommand{ANALOG_OUT, DIGITAL_IN, ANALOG_IN};
-	private BlockState[] levers = new BlockState[128];
+//	private BlockState[] levers = new BlockState[128];// old
+	private ArrayList<HashMap<BlockState, Condition>> levers = new ArrayList<>(128);
 	private HashMap<Block, Integer> outWires = new HashMap<>();
 	private ConfigLoader configLoader;
 
 	public ArduController(ArduinoMCPlugin plugin) {
 		this.plugin = plugin;
 		this.configLoader = new ConfigLoader(plugin, this);
+		for (int i = 0; i < 128; i++)
+			levers.add(i, new HashMap<BlockState, Condition>());
 		try {
 			configLoader.load();
 		} catch (Exception e) {
@@ -63,15 +67,32 @@ public class ArduController implements Closeable {
 
 	public void setMCAnalog(int pin, int value) {
 		//TODO: erst nach vortrag implementiren
-		warn("[NOT_IMPLEMENTED] setMCAnalog("+pin+", "+value+")");
+//		warn("[NOT_IMPLEMENTED] setMCAnalog("+pin+", "+value+")");
+		setMCDigital(pin, value);
 	}
 
 	public void setMCDigital(int pin, int value) {
-		if (pin >= levers.length)
+		if (pin >= levers.size())
 			throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
-		Lever lever = (Lever) levers[pin].getData();
-		lever.setPowered(value != 0);
-		levers[pin].update();
+		
+		boolean debug = plugin.isInDebugMode();
+		for (BlockState bs : levers.get(pin).keySet()) {
+			if (debug)
+				info("BlockState: "+bs+" for pin "+pin+" at value "+value);
+			Lever lever = (Lever) bs.getData();
+			Condition cond = levers.get(pin).get(bs);
+			if (cond != null) {
+				try {
+					lever.setPowered(cond.matches(value));
+				} catch (Exception e) {
+					lever.setPowered(value != 0);
+				}
+			} else {
+				lever.setPowered(value != 0);
+			}
+				
+			bs.update();
+		}
 	}
 
 	/**
@@ -161,9 +182,9 @@ public class ArduController implements Closeable {
 	 * @param condition (may be null)
 	 */
 	public void addLever(BlockState lever, int pin, Condition condition) {//TODO implement condition
-		if (pin >= levers.length)
+		if (pin >= levers.size())
 			throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
-		levers[pin] = lever;
+		levers.get(pin).put(lever, condition);
 	}
 	
 	@Deprecated
@@ -198,7 +219,7 @@ public class ArduController implements Closeable {
 		return arduListener;
 	}
 
-	public BlockState[] getLevers() {
+	public ArrayList<HashMap<BlockState,Condition>> getLevers() {
 		return levers;
 	}
 
