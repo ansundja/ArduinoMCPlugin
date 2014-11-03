@@ -3,6 +3,7 @@ package de.sfn_kassel.minecraft.arduino.arduino;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.bukkit.Location;
@@ -102,7 +103,7 @@ public class ArduController implements Closeable {
 	 * </p>
 	 * 
 	 * @param cmd One of the followings: {@code DIGITAL_IN, ANALOG_IN}
-	 * @param pin Number of the pin (analog output A1 = ??TODO??)
+	 * @param pin Number of the pin (analog output A0 = 14)
 	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin) {
 		sendToArduino(cmd, pin, 0);
@@ -115,7 +116,7 @@ public class ArduController implements Closeable {
 	 * </p>
 	 * 
 	 * @param cmd One of the followings: {@code ANALOG_OUT, DIGITAL_IN, ANALOG_IN}
-	 * @param pin Number of the pin (analog output A1 = ??TODO??)
+	 * @param pin Number of the pin (analog output A0 = 14)
 	 * @param value The value to be set. For analog output it should be 0-15.
 	 */
 	public void sendToArduino(ArduinoCommand cmd, int pin, int value) {
@@ -181,7 +182,7 @@ public class ArduController implements Closeable {
 	 * @param pin
 	 * @param condition (may be null)
 	 */
-	public void addLever(BlockState lever, int pin, Condition condition) {//TODO implement condition
+	public void addLever(BlockState lever, int pin, Condition condition) {
 		if (pin >= levers.size())
 			throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
 		levers.get(pin).put(lever, condition);
@@ -244,8 +245,10 @@ public class ArduController implements Closeable {
 	}
 
 	public void addSign(SignChangeEvent signChangeEvent, Location block) {
-		knownBlocksAndSigns.put(signChangeEvent.getBlock().getLocation(), block);
-		//TODO store signChangeEvent.getLine(2) somewhere 
+		knownBlocksAndSigns.put(block, signChangeEvent.getBlock().getLocation());
 	}
 	
+	public Collection<Location> getKnownSigns() {
+		return knownBlocksAndSigns.values();
+	}
 }

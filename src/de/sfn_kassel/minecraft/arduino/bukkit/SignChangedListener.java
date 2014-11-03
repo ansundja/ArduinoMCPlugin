@@ -1,5 +1,6 @@
 package de.sfn_kassel.minecraft.arduino.bukkit;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -106,19 +107,17 @@ public class SignChangedListener implements Listener {
 					|| block.getType() == Material.REDSTONE
 					|| block.getType() == Material.REDSTONE_ORE) {
 				plugin.getController().getOutWires().put(block, signPin);
-			} 
-			
-			
+			}
 		} else {
 			//TODO remove sign
 //			plugin.getController().getKnownSigns().remove(event.getBlock().getLocation());
 		}
 	}
-
-//	@SuppressWarnings("unused")// TODO remove or use it
-//	private Block getRedstoneOnWool(Block wool) {
-//		return wool.getLocation().add(0, 1, 0).getBlock();
-//	}
+	
+	public void addSign(Location loc) {//TODO
+		if (plugin.isInDebugMode())
+			plugin.getLogger().warning("[NOT IMPLEMENTED] should create read the Sign at "+loc);
+	}
 
 	@EventHandler(priority=EventPriority.LOWEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
