@@ -6,9 +6,11 @@ import java.io.IOException;
 import de.sfn_kassel.minecraft.arduino.com.Com;
 
 public class ArduListener implements Runnable, Closeable {
-	final ArduController arduController;
-	Com comPort;
-	boolean running = false;
+	private final ArduController arduController;
+	private Com comPort;
+	private boolean running = false;
+	private boolean waitingForCom = true;
+	private String sendLater = "";
 
 	public ArduListener(ArduController arduController, Com comPort) {
 		this.arduController = arduController;
@@ -26,6 +28,10 @@ public class ArduListener implements Runnable, Closeable {
 			String cmd = "";
 			try {
 				while (running && (c = (char) comPort.getInputStream().read()) != -1 && c != '\n') {
+					if (!waitingForCom && !sendLater.isEmpty()) {
+						comPort.sendSerialPort(sendLater);
+						sendLater = "";
+					}
 					if (c != 65535)// prevent '?' / -1
 						cmd += c;
 				}
@@ -101,6 +107,7 @@ public class ArduListener implements Runnable, Closeable {
 			break;
 		case 's'://success
 		case 'S':
+			waitingForCom = false;
 			if(arduController.getPlugin().isInDebugMode())
 				arduController.info("success: "+cmd);
 			break;
@@ -118,5 +125,11 @@ public class ArduListener implements Runnable, Closeable {
 	public void close() throws IOException {
 		arduController.info("closing ArduListener...");
 		this.running = false;
+	}
+	
+	public void sendLater(String s) {
+		if (!s.endsWith("\n"))
+			s += "\n";
+		sendLater += s;
 	}
 }

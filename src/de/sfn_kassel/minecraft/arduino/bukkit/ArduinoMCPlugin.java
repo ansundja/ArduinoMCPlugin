@@ -30,7 +30,7 @@ public class ArduinoMCPlugin extends JavaPlugin {
 //				Com c = new Com(getLogger(), null);
 				controller = new ArduController(this);
 //				new ArduListener(controller, controller.getCom());//new
-				new SignChangedListener(this);
+				
 				new RedstoneChangedListener(this);
 			}
 		} catch (Error e) {

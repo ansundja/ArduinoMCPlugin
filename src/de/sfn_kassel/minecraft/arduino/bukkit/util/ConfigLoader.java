@@ -11,21 +11,22 @@ import de.sfn_kassel.minecraft.arduino.bukkit.SignChangedListener;
 public class ConfigLoader {
 	
 	private ArduinoMCPlugin plugin;
+//	private ArduController controller;
 //	private ArrayList<HashMap<BlockState,Condition>> levers;
 //	private HashMap<Block, Integer> outWires;
 
 	public ConfigLoader(ArduinoMCPlugin plugin, ArduController controller) {
 		this.plugin = plugin;
-//		this.levers = controller.getLevers();
+//		this.controller = controller;
 //		this.outWires = controller.getOutWires();
 	}
 
-	public void load() {//TODO load sign-list
+	public void load(SignChangedListener sCL) {//TODO load sign-list
 //		FileConfiguration config = plugin.getConfig();
 		
 		Location loc;
 		int k = 0;
-		SignChangedListener sCL = new SignChangedListener(plugin);
+//		SignChangedListener sCL = new SignChangedListener(plugin, controller);
 		while ((loc = loadLocation("controller.signs."+k++)) != null) {
 			sCL.addSign(loc);
 		}

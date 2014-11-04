@@ -10,10 +10,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.material.Lever;
 
 import de.sfn_kassel.minecraft.arduino.bukkit.ArduinoMCPlugin;
+import de.sfn_kassel.minecraft.arduino.bukkit.SignChangedListener;
 import de.sfn_kassel.minecraft.arduino.bukkit.util.Condition;
 import de.sfn_kassel.minecraft.arduino.bukkit.util.ConfigLoader;
 import de.sfn_kassel.minecraft.arduino.com.Com;
@@ -32,15 +32,16 @@ public class ArduController implements Closeable {
 
 	public ArduController(ArduinoMCPlugin plugin) {
 		this.plugin = plugin;
+		SignChangedListener sCL = new SignChangedListener(plugin, this);
 		this.configLoader = new ConfigLoader(plugin, this);
 		for (int i = 0; i < 128; i++)
 			levers.add(i, new HashMap<BlockState, Condition>());
+		resetComAndListener();
 		try {
-			configLoader.load();
+			configLoader.load(sCL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		resetComAndListener();
 	}
 	
 	public void resetComAndListener() {
@@ -135,6 +136,32 @@ public class ArduController implements Closeable {
 		}
 	}
 	
+	/**
+	 * <b>Communication PC --> Arduino</b><br>
+	 * <p>
+	 * Generates and sends a command to the Arduino via COM-port as soon as possible.
+	 * </p>
+	 * 
+	 * @param cmd One of the followings: {@code ANALOG_OUT, DIGITAL_IN, ANALOG_IN}
+	 * @param pin Number of the pin (analog output A0 = 14)
+	 * @param value The value to be set. For analog output it should be 0-15.
+	 */
+	public void sendToArduinoLater(ArduinoCommand cmd, int pin, int value) {
+		switch (cmd) {
+		case DIGITAL_IN:
+			sendToArduinoLater("d"+((char) ('@'+pin))+"X\n");
+			break;
+
+		case ANALOG_IN:
+			sendToArduinoLater("a"+((char) ('@'+pin))+"X\n");
+			break;
+
+		case ANALOG_OUT:
+			sendToArduinoLater("o"+((char) ('@'+pin))+((char) ('@'+value))+"\n");
+			break;
+		}
+	}
+	
 	/*
 	 * Communication PC --> Arduino
 	 * 
@@ -167,6 +194,12 @@ public class ArduController implements Closeable {
 		if (!cmd.endsWith("\n"))
 			cmd += '\n';
 		com.sendSerialPort(cmd);
+	}
+	
+	public void sendToArduinoLater(String cmd) {
+		if (!cmd.endsWith("\n"))
+			cmd += '\n';
+		arduListener.sendLater(cmd);
 	}
 	
 	public void removeLever(int pin) {
@@ -244,8 +277,8 @@ public class ArduController implements Closeable {
 		return knownBlocksAndSigns.containsValue(loc);
 	}
 
-	public void addSign(SignChangeEvent signChangeEvent, Location block) {
-		knownBlocksAndSigns.put(block, signChangeEvent.getBlock().getLocation());
+	public void addSign(Location sign, Location block) {
+		knownBlocksAndSigns.put(block, sign);
 	}
 	
 	public Collection<Location> getKnownSigns() {

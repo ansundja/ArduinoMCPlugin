@@ -79,73 +79,7 @@ public class Com implements Closeable {
 			this.portName = portName;
 		if (openSerialPort(this.portName) != true)
 			return;
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				while (serialPortGeoeffnet) {
-//					readSerialPort();
-//					try {
-//						Thread.sleep(100);
-//					} catch (InterruptedException e) {}
-//				}
-//			}
-//		}).start();
 	}
-
-//	private void loadLibarys() {
-//		String[] LIBARYS = {};
-////		String osName = System.getProperty("os.name").toLowerCase(), osDir = "";
-////		if (osName.contains("win")) {
-//			LIBARYS = LIBARYS_WINDOWS;
-////			osDir = "win";
-////		} else if (osName.contains("nux")) {
-////			LIBARYS = LIBARYS_LINUX;
-////			osDir = "linux";
-////		} else if (osName.contains("mac") || osName.contains("darwin")) {
-////			return;
-////		} else
-////			return;
-////		char fSep = File.separatorChar;
-//////		String path = "res"+fSep+"dll"+fSep+System.getProperty("sun.arch.data.model");
-////		String osArch = System.getProperty("os.arch").toLowerCase(), osArchDir = "";
-////		if (osArch.equals("amd64")) {
-////			osArchDir = "amd64";
-////		} else if (osArch.contains("86")) {
-////			osArchDir = "x86";
-////		} else if (osArch.contains("64")) {
-////			osArchDir = "x64";
-////		} else if (osName.contains("mac") || osName.contains("darwin")) {
-////			return;
-////		} else
-////			return;
-////		String path = "res"+fSep+osDir+fSep+osArchDir;
-////		if (new File(path).exists() && new File(path).isDirectory())
-////			info("existiert");
-////		info(System.getProperty("os.name"));
-////		info(System.getProperty("os.arch"));
-////		info(path);
-////		//TODO ^^ res-management
-//		char fSep = File.separatorChar;
-//		String path = "plugins"+fSep+"ArduinoMCPlugin"+fSep+"lib";
-//
-//		for (String libary : LIBARYS) {
-//			try {
-//				File fullPath = new File(path+fSep+libary);
-//				if (fullPath.exists()) {
-////					new File(libary).delete();
-//					Files.copy(fullPath.toPath(), new File(libary).toPath(), StandardCopyOption.REPLACE_EXISTING);
-//					info("copied: "+fullPath.getAbsolutePath());
-//				} else {
-//					throw new FileNotFoundException("Could not find file "+fullPath.getAbsolutePath());
-//				}
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			if (new File(libary).exists())
-//				System.load(new File(libary).getAbsolutePath());
-//			info("load: "+new File(libary).getAbsolutePath());
-//		}
-//	}
 	
 	public ArrayList<String> getSerialPorts() {
 		Enumeration<?> enumComm = CommPortIdentifier.getPortIdentifiers();
@@ -277,7 +211,7 @@ public class Com implements Closeable {
 		lastCMD = stringToBinary(cmdAndSum);
 	}
 	
-	public void sendSerialPort(String nachricht)
+	public void sendSerialPort(final String nachricht)
 	{
 //		if(arduController.getPlugin().isInDebugMode())//mach mal dass es geht :) // garnicht... siehe Variable out oben bzw methode info() unten
 			info("Sende: " + nachricht);
