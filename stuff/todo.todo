@@ -1,30 +1,30 @@
 already done:
-	x digitaler input
-	x arduino seitiger code
-	x protokoll
+	- [ ] digitaler input
+	- [x] arduino seitiger code
+	- [x] protokoll
 
 todo:
-	x zwichenspeichern/ initialisieren des ardu
-	- NUR die Locations von den Schildern speichern -> alles andere beim Laden durch lesen der Schilder füllen!
-	- restart != sterben
-	x analoger output
-	//wir haben eine andere mölichkeit gefunden - hashmap umdrehen
-	x Wie herum die Hashmap für die Schilder? --> Block -> Schild
-	- Schilder-Hashmap vollständig implementieren
-	- Arduino Reset comand
-	- (analoger input)(über <>= operatoren)
-	- (Schalter sperren wenn er vom ardu genutzt wird)
-	- Soll das nur funktionieren, wenn das Schild NACH dem Schalter/Redstonekabel platziert wird? (falls nein, überlegen und implementieren...; aufwändig.. mäh ... nach Know IT?) Jaro´s meinung : statt einem on sign changed listener einen on block listenr benutzen!! ;)
-	x Soll der Output nur mit Wires funktionieren, oder auch mit anderen Blöcken? (falls auch mit anderen, muss man glaube nur die Überprüfung rausnehmen, obs ein Kabel ist, da beim Event ja gleich eine neue Current übergeben wird und das Plugin so nichtmal wissen muss, was das für ein Block ist...) Jaro´s meinung: Jo machen wir
-	x debug mode
-	x Changelog entweder ordentlich führen oder abschaffen... Jaro´s meinung: ABSCHAFFEN UND GIT BEUTZEN!!!
-	- Schilder unregistrieren
+	- [x] zwichenspeichern/ initialisieren des ardu
+	- [ ] NUR die Locations von den Schildern speichern -> alles andere beim Laden durch lesen der Schilder fÃ¼llen!
+	- [ ] restart != sterben
+	- [x] analoger output
+	//wir haben eine andere mÃ¶lichkeit gefunden - [ ] hashmap umdrehen
+	- [x] Wie herum die Hashmap fÃ¼r die Schilder? --> Block -> Schild
+	- [ ] Schilder-Hashmap vollstÃ¤ndig implementieren
+	- [ ] Arduino Reset comand
+	- [ ] (analoger input)(Ã¼ber <>= operatoren)
+	- [ ] (Schalter sperren wenn er vom ardu genutzt wird)
+	- [ ] Soll das nur funktionieren, wenn das Schild NACH dem Schalter/Redstonekabel platziert wird? (falls nein, Ã¼berlegen und implementieren...; aufwÃ¤ndig.. mÃ¤h ... nach Know IT?) JaroÂ´s meinung : statt einem on sign changed listener einen on block listenr benutzen!! ;)
+	- [x] Soll der Output nur mit Wires funktionieren, oder auch mit anderen BlÃ¶cken? (falls auch mit anderen, muss man glaube nur die ÃœberprÃ¼fung rausnehmen, obs ein Kabel ist, da beim Event ja gleich eine neue Current Ã¼bergeben wird und das Plugin so nichtmal wissen muss, was das fÃ¼r ein Block ist...) JaroÂ´s meinung: Jo machen wir
+	- [x] debug mode
+	- [x] Changelog entweder ordentlich fÃ¼hren oder abschaffen... JaroÂ´s meinung: ABSCHAFFEN UND GIT BEUTZEN!!!
+	- [ ] Schilder unregistrieren
 		
-	- verwendugszweck überlgen jaro:vll. rapid prototyping
-	- beispiel aufbau
-	- vortrag
-		- ausdenken
-		- üben
+	- [ ] verwendugszweck Ã¼berlgen jaro:vll. rapid prototyping
+	- [ ] beispiel aufbau
+	- [ ] vortrag
+		- [ ] ausdenken
+		- [ ] Ã¼ben
 
 
 
