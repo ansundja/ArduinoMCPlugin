@@ -133,7 +133,9 @@ public class SignChangedListener implements Listener {
 				controller.sendToArduinoLater((condition == null) ? ArduinoCommand.DIGITAL_IN : ArduinoCommand.ANALOG_IN, signPin, 12);
 				
 			} else {
-				controller.getOutWires().put(block, signPin);
+				synchronized (controller.getOutWires()) {
+					controller.getOutWires().put(block, signPin);
+				}
 			}
 		} else {
 			//TODO remove sign

@@ -74,26 +74,33 @@ public class ArduController implements Closeable {
 	}
 
 	public void setMCDigital(int pin, int value) {
-		if (pin >= levers.size())
-			throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
-		
-		boolean debug = plugin.isInDebugMode();
-		for (BlockState bs : levers.get(pin).keySet()) {
-			if (debug)
-				info("BlockState: "+bs+" for pin "+pin+" at value "+value);
-			Lever lever = (Lever) bs.getData();
-			Condition cond = levers.get(pin).get(bs);
-			if (cond != null) {
-				try {
-					lever.setPowered(cond.matches(value));
-				} catch (Exception e) {
+		synchronized (levers) {
+			if (pin >= levers.size())
+				throw new IndexOutOfBoundsException("pinnr \""+pin+"\" is invalid");
+			
+			boolean debug = plugin.isInDebugMode();
+			for (BlockState bs : levers.get(pin).keySet()) {
+				if (debug)
+					info("BlockState: "+bs+" for pin "+pin+" at value "+value);
+				Lever lever = (Lever) bs.getData();
+				Condition cond = levers.get(pin).get(bs);
+				if (cond != null) {
+					try {
+						lever.setPowered(cond.matches(value));
+					} catch (Exception e) {
+						lever.setPowered(value != 0);
+					}
+				} else {
 					lever.setPowered(value != 0);
 				}
-			} else {
-				lever.setPowered(value != 0);
-			}
 				
-			bs.update();
+				try {
+					bs.update();//TODO FEHLER HIER???
+				} catch (Exception e) {
+					System.out.println("[ACHTUNG!!!] \"bs.update()\" wirft Exception");
+					throw new RuntimeException(e);
+				}
+			}
 		}
 	}
 
@@ -266,22 +273,32 @@ public class ArduController implements Closeable {
 	}
 	
 	public boolean isKnownLocation(Location loc) {
-		return knownBlocksAndSigns.containsKey(loc);
+		synchronized (knownBlocksAndSigns) {
+			return knownBlocksAndSigns.containsKey(loc);
+		}
 	}
 	
 	public BlockState getSignByBlock(Location redstoneBlock) {
-		return knownBlocksAndSigns.get(redstoneBlock).getBlock().getState();
+		synchronized (knownBlocksAndSigns) {
+			return knownBlocksAndSigns.get(redstoneBlock).getBlock().getState();
+		}
 	}
 	
 	public boolean isKnownSign(Location loc) {
-		return knownBlocksAndSigns.containsValue(loc);
+		synchronized (knownBlocksAndSigns) {
+			return knownBlocksAndSigns.containsValue(loc);
+		}
 	}
 
 	public void addSign(Location sign, Location block) {
-		knownBlocksAndSigns.put(block, sign);
+		synchronized (knownBlocksAndSigns) {
+			knownBlocksAndSigns.put(block, sign);
+		}
 	}
 	
 	public Collection<Location> getKnownSigns() {
-		return knownBlocksAndSigns.values();
+		synchronized (knownBlocksAndSigns) {
+			return knownBlocksAndSigns.values();
+		}
 	}
 }

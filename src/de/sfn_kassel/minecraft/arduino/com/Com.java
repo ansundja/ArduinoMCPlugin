@@ -57,7 +57,7 @@ public class Com implements Closeable {
 //	@SuppressWarnings("rawtypes")
 //	Enumeration enumComm;
 	SerialPort serialPort;
-	OutputStream outputStream;
+	private OutputStream outputStream;
 	InputStream inputStream;
 	boolean serialPortGeoeffnet = false;
 
@@ -160,7 +160,7 @@ public class Com implements Closeable {
 				getInputStream().close();
 			} catch (IOException e) {}
 			try {
-				getOutputStream().close();
+				outputStream.close();
 			} catch (IOException e) {}
 			serialPort.close();
 			serialPortGeoeffnet = false;
@@ -218,7 +218,9 @@ public class Com implements Closeable {
 		if (serialPortGeoeffnet != true)
 			return;
 		try {
-			outputStream.write(nachricht.getBytes());
+			synchronized (outputStream) {
+				outputStream.write(nachricht.getBytes());
+			}
 		} catch (IOException e) {
 			info("Fehler beim Senden");
 		}
@@ -277,9 +279,9 @@ public class Com implements Closeable {
 		return lastCMD;
 	}
 	
-	public OutputStream getOutputStream() {
-		return outputStream;
-	}
+//	public OutputStream getOutputStream() {
+//		return outputStream;
+//	}
 
 	public InputStream getInputStream() {
 		return inputStream;

@@ -27,7 +27,8 @@ public class ArduListener implements Runnable, Closeable {
 			char c;
 			String cmd = "";
 			try {
-				while (running && (c = (char) comPort.getInputStream().read()) != -1 && c != '\n') {
+				while (running && comPort.getInputStream() != null &&
+						(c = (char) comPort.getInputStream().read()) != -1 && c != '\n') {
 					if (!waitingForCom && !sendLater.isEmpty()) {
 						comPort.sendSerialPort(sendLater);
 						sendLater = "";

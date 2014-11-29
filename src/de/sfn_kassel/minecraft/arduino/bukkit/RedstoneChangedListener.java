@@ -16,8 +16,8 @@ public class RedstoneChangedListener implements Listener {
 
 	@EventHandler
 	public void redstoneChanged(BlockRedstoneEvent event) {
-		if(plugin.isInDebugMode())
-			plugin.getLogger().info("BlockRedstoneEvent; new current: "+event.getNewCurrent());
+//		if(plugin.isInDebugMode())
+//			plugin.getLogger().info("BlockRedstoneEvent; new current: "+event.getNewCurrent());
 		
 		Integer pin = plugin.getController().getOutWires().get(event.getBlock());
 		if (pin == null)
